@@ -4,7 +4,8 @@
     = menu_item "Departments", departments_path
     = menu_item "States", states_path
   - if current_owner
-    = menu_item "Log Out", destroy_owner_session_path, method: :delete
+    = menu_group pull: :right do
+      = menu_item "Log Out", destroy_owner_session_path, method: :delete
   - else
     = menu_group pull: :right do
       = menu_item "Sign Up", new_owner_registration_path
