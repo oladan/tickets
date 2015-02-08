@@ -1,0 +1,16 @@
+%h2 Add a reply:
+= form_for([@ticket, @ticket.replies.build]) do |f|
+  .form-group
+    .controls
+      = f.text_area :body, class: 'form-control', required: true
+    = error_span(@ticket[:body])
+  
+  .form-group
+    = f.label 'Set status', class: 'control-label'
+    .controls
+      = collection_select(:reply, :state_id, State.all, :id, :name, {:selected => @ticket.state.id})
+    = error_span(@ticket[:state_id])
+
+  = f.hidden_field :current_owner_email, value: current_owner.email
+  = f.hidden_field :owner_id, value: current_owner.id
+  = f.submit nil,class: 'btn btn-primary'

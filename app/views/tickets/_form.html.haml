@@ -1,0 +1,30 @@
+= form_for @ticket, html: { class: "form form-horizontal ticket" } do |f|
+  .form-group
+    = f.label :client_name, class: 'control-label'
+    .controls
+      = f.text_field :client_name, class: 'form-control', required: true
+    = error_span(@ticket[:client_name])
+  .form-group
+    = f.label :client_email, class: 'control-label'
+    .controls
+      = f.text_field :client_email, class: 'form-control', required: true
+    = error_span(@ticket[:client_email])
+  .form-group
+    = f.label :subject, class: 'control-label'
+    .controls
+      = f.text_field :subject, class: 'form-control', required: true
+    = error_span(@ticket[:subject])
+  .form-group
+    = f.label :body, class: 'control-label'
+    .controls
+      = f.text_area :body, class: 'form-control', required: true
+    = error_span(@ticket[:body])
+  .form-group
+    = f.label :department_id, class: 'control-label'
+    .controls
+      = collection_select(:ticket, :department_id, Department.all, :id, :name)
+    = error_span(@ticket[:department_id])
+  = f.hidden_field :uniq_reference, value: @uniq_ref
+  = f.hidden_field :state_id, value: 1
+  = f.submit nil,class: 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), tickets_path, :class => 'btn btn-default'

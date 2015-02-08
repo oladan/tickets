@@ -1,6 +1,6 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_owner!
   respond_to :html
 
   def index

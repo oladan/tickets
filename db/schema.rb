@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150207085246) do
+ActiveRecord::Schema.define(version: 20150208124406) do
 
   create_table "departments", force: true do |t|
     t.string   "name"
@@ -41,7 +41,17 @@ ActiveRecord::Schema.define(version: 20150207085246) do
     t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ticket_id"
+    t.integer  "owner_id"
+    t.string   "current_owner_email"
+    t.integer  "department_id"
+    t.integer  "state_id"
   end
+
+  add_index "replies", ["department_id"], name: "index_replies_on_department_id"
+  add_index "replies", ["owner_id"], name: "index_replies_on_owner_id"
+  add_index "replies", ["state_id"], name: "index_replies_on_state_id"
+  add_index "replies", ["ticket_id"], name: "index_replies_on_ticket_id"
 
   create_table "states", force: true do |t|
     t.string   "name"
@@ -57,6 +67,13 @@ ActiveRecord::Schema.define(version: 20150207085246) do
     t.string   "uniq_reference"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "department_id"
+    t.integer  "state_id"
+    t.integer  "owner_id"
   end
+
+  add_index "tickets", ["department_id"], name: "index_tickets_on_department_id"
+  add_index "tickets", ["owner_id"], name: "index_tickets_on_owner_id"
+  add_index "tickets", ["state_id"], name: "index_tickets_on_state_id"
 
 end

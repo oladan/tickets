@@ -1,0 +1,40 @@
+- model_class = Ticket
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%center
+  = link_to raw('<i class="glyphicon glyphicon-plus"> Submit ticket</i>'), new_ticket_path, :class => 'btn btn-primary btn-lg'
+%br
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:client)
+      %th= model_class.human_attribute_name(:client_email)
+      %th= model_class.human_attribute_name(:subject)
+      %th= model_class.human_attribute_name(:body)
+      %th= model_class.human_attribute_name(:uniq_reference)
+      %th= model_class.human_attribute_name(:department_id)
+      %th= model_class.human_attribute_name(:state_id)
+      %th= model_class.human_attribute_name(:owner_id)
+      %th= model_class.human_attribute_name(:created)
+      %th= model_class.human_attribute_name(:replies)
+  %tbody
+    - @tickets.each do |ticket|
+      %tr
+        %td= link_to ticket.id, 'tickets/' + ticket.uniq_reference
+        %td= ticket.client_name
+        %td= ticket.client_email
+        %td= ticket.subject
+        %td= ticket.body
+        %td= ticket.uniq_reference
+        %td= ticket.department.name
+        %td= ticket.state.name
+        -if ticket.owner_id
+          %td= ticket.owner.email
+        -else
+          %td= ''
+        %td= ticket.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        %td= ticket.count_replies
+
+= will_paginate @collection, renderer: BootstrapPagination::Rails
+  

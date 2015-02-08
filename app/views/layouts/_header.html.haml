@@ -1,8 +1,10 @@
 = nav_bar fixed: :top, brand: "Tickets" do
   = menu_group do
     = menu_item "Home", root_path
-    = menu_item "Departments", departments_path
-    = menu_item "States", states_path
+    = menu_item "Submit ticket", new_ticket_path
+    - if current_owner
+      = menu_item "Departments", departments_path
+      = menu_item "States", states_path
   - if current_owner
     = menu_group pull: :right do
       = menu_item "Log Out", destroy_owner_session_path, method: :delete

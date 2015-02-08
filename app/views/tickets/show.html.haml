@@ -1,0 +1,62 @@
+- model_class = Ticket
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
+
+%p
+  %strong= model_class.human_attribute_name(:client_name) + ':'
+  %br
+  = @ticket.client_name
+%p
+  %strong= model_class.human_attribute_name(:client_email) + ':'
+  %br
+  = @ticket.client_email
+%p
+  %strong= model_class.human_attribute_name(:subject) + ':'
+  %br
+  = @ticket.subject
+%p
+  %strong= model_class.human_attribute_name(:body) + ':'
+  %br
+  = @ticket.body
+%p
+  %strong= model_class.human_attribute_name(:uniq_reference) + ':'
+  %br
+  = @ticket.uniq_reference
+%p
+  %strong= model_class.human_attribute_name(:department_id) + ':'
+  %br
+  = @ticket.department.name
+%p
+  %strong= model_class.human_attribute_name(:state_id) + ':'
+  %br
+  = @ticket.state.name
+- if @ticket.owner_id
+  %p
+    %strong= model_class.human_attribute_name(:owner_id) + ':'
+    %br
+    = @ticket.owner.email
+
+
+= link_to t('.back', :default => t("helpers.links.back")), tickets_path, :class => 'btn btn-default'
+- if @ticket.replies.last
+  %h2 Replies
+
+
+- @ticket.replies.each do |reply|
+  %hr
+  %p
+    %strong= model_class.human_attribute_name(:support_email) + ':'
+    = reply.current_owner_email
+    %br
+    %strong= model_class.human_attribute_name(:reply) + ':'
+    = reply.body
+    %br
+    %strong= model_class.human_attribute_name(:state) + ':'
+    = reply.state.name
+    %br
+    %strong= model_class.human_attribute_name(:created_at) + ':'
+    = reply.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+%br
+- if owner_signed_in?
+  = render :partial => "form_reply"

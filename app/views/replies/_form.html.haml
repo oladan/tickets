@@ -1,0 +1,18 @@
+= form_for @reply, html: { class: "form form-horizontal reply" } do |f|
+  .form-group
+    = f.label :body, class: 'control-label'
+    .controls
+      = f.text_field :body, class: 'form-control', required: true
+    = error_span(@reply[:body])
+  .form-group
+    = f.label :ticket_id, class: 'control-label'
+    .controls
+      = f.text_field :ticket_id, class: 'form-control', required: true
+    = error_span(@reply[:ticket_id])
+  .form-group
+    = f.label :owner_id, class: 'control-label'
+    .controls
+      = f.text_field :owner_id, class: 'form-control', required: true
+    = error_span(@reply[:owner_id])
+  = f.submit nil,class: 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), replies_path, :class => 'btn btn-default'

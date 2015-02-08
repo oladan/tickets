@@ -11,6 +11,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem "haml-rails", "~> 0.8"
 gem 'will_paginate'
 gem "twitter-bootstrap-rails"
+gem 'will_paginate-bootstrap'
 gem 'devise'
 
 group :development, :test do
