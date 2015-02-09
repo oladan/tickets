@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
 
-  get 'replies/create'
-
-  resources :tickets do
+  resources :tickets, except: [:update, :destroy] do
     resources :replies
   end
   
-  resources :states, :only => [:show, :new, :create, :index, :update, :edit]
-  resources :departments, :only => [:show, :new, :create, :index, :update, :edit]
+  resources :states, except: [:destroy]
+  resources :departments, except: [:destroy]
 
   devise_for :owners
 
-  resources :owners, :only => [:show]
+  resources :owners, only: [:show]
   
   root to: "tickets#index"
 end

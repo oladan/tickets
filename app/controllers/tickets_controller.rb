@@ -20,6 +20,9 @@ class TicketsController < ApplicationController
     respond_with(@ticket)
   end
 
+  def edit
+  end
+
   def create
     @ticket = Ticket.new(ticket_params)
     @ticket.save

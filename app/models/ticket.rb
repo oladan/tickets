@@ -20,7 +20,4 @@ class Ticket < ActiveRecord::Base
   scope :filter_state, -> (state_id) { where state_id: state_id }
   scope :filter_subject, -> (subject) { where("subject like ? or body like ? or uniq_reference like ?", 
                                               "%#{subject}%", "%#{subject}%", "%#{subject}%")}
-  def count_replies
-    Reply.where(:ticket_id => self.id).count
-  end
 end
