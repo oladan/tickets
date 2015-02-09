@@ -1,0 +1,18 @@
+%center
+  | 
+  %b Filter by Department:
+  - @departments.each do |d|
+    = link_to d.name, :filter_department_id => d.id
+    |
+  %br
+  | 
+  %b Filter by Status
+  - @states.each do |s|
+    = link_to s.name, :filter_state_id => s.id
+    |
+  %br
+  %br
+  = form_tag request.original_url, :method => 'get' do
+    %p
+      = text_field_tag :search, params[:search], :placeholder => 'Ref id, subject, body...'
+      = submit_tag "Search", :name => nil

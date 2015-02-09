@@ -4,7 +4,13 @@ class TicketsController < ApplicationController
   respond_to :html
 
   def index
-    @tickets = Ticket.all.paginate(:page => params[:page], :per_page => 5)
+    @departments = Department.all
+    @states = State.all
+    @tickets = Ticket.where(nil)
+    @tickets = @tickets.filter_department(filter_params[:filter_department_id]) if filter_params[:filter_department_id].present?
+    @tickets = @tickets.filter_state(filter_params[:filter_state_id]) if filter_params[:filter_state_id].present?
+    @tickets = @tickets.filter_subject(filter_params[:search]) if filter_params[:search].present?
+    @tickets = @tickets.order(:id => :desc).paginate(:page => params[:page], :per_page => 5)
     respond_with(@tickets)
   end
 
@@ -31,13 +37,16 @@ class TicketsController < ApplicationController
 
   private
     def set_ticket
-      # @ticket = Ticket.find(params[:id])
       @ticket = Ticket.find_by uniq_reference: params[:id]
     end
 
     def ticket_params
-      params.require(:ticket).permit(:client_name, :client_email, :subject, :body, :department_id, 
-                                     :uniq_reference, :state_id)
+      params.require(:ticket).permit(:client_name, :client_email, :subject, :body, :department_id,
+                                     :uniq_reference, :state_id, :ticket)
+    end
+
+    def filter_params
+      params.permit(:ticket, :filter_department_id, :filter_state_id, :filter_owner_id, :search)
     end
 
     def char_gen
