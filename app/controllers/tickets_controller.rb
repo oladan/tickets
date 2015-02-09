@@ -1,12 +1,12 @@
 class TicketsController < ApplicationController
   before_action :set_ticket, only: [:show]
-
   respond_to :html
 
   def index
     @departments = Department.all
     @states = State.all
     @tickets = Ticket.where(nil)
+    @uniq_ref = uniq_reference
     @tickets = @tickets.filter_department(filter_params[:filter_department_id]) if filter_params[:filter_department_id].present?
     @tickets = @tickets.filter_state(filter_params[:filter_state_id]) if filter_params[:filter_state_id].present?
     @tickets = @tickets.filter_subject(filter_params[:search]) if filter_params[:search].present?
@@ -22,14 +22,9 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
-    respond_to do |format|
-      if @ticket.save
-        UserMailer.ticket_added_email(ticket_params).deliver
-        format.html { redirect_to(tickets_path, :notice => 'Ticket was successfully created.') }
-      else
-        format.html { render :action => "new" }
-      end
-    end
+    @ticket.save
+    respond_with(@ticket)
+    UserMailer.ticket_added_email(ticket_params).deliver
   end
 
   def show
