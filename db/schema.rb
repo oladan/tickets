@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208124406) do
+ActiveRecord::Schema.define(version: 20150209015029) do
 
   create_table "departments", force: true do |t|
     t.string   "name"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150208124406) do
   add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
 
   create_table "replies", force: true do |t|
-    t.string   "body"
+    t.text     "body",                limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ticket_id"

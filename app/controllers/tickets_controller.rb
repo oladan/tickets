@@ -24,6 +24,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.save
+        UserMailer.ticket_added_email(ticket_params).deliver
         format.html { redirect_to(tickets_path, :notice => 'Ticket was successfully created.') }
       else
         format.html { render :action => "new" }

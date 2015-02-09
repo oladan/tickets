@@ -8,11 +8,12 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
-gem "haml-rails", "~> 0.8"
+gem 'haml-rails', '~> 0.8'
 gem 'will_paginate'
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
 gem 'will_paginate-bootstrap'
 gem 'devise'
+gem 'figaro'
 
 group :development, :test do
   gem 'sqlite3'
