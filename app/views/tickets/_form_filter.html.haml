@@ -1,12 +1,12 @@
 %center
   | 
-  %b Filter by Department:
+  %b Department:
   - @departments.each do |d|
     = link_to d.name, :filter_department_id => d.id
     |
   %br
   | 
-  %b Filter by Status
+  %b Status:
   - @states.each do |s|
     = link_to s.name, :filter_state_id => s.id
     |
