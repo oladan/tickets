@@ -5,4 +5,16 @@ class Owner < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :tickets
   has_many :replies
+
+  def active_for_authentication? 
+    super && approved? 
+  end 
+
+  def inactive_message 
+    if !approved? 
+      :not_approved 
+    else 
+      super # Use whatever other message 
+    end 
+  end
 end

@@ -31,11 +31,6 @@ class StatesController < ApplicationController
     respond_with(@state)
   end
 
-  def destroy
-    @state.destroy
-    respond_with(@state)
-  end
-
   private
     def set_state
       @state = State.find(params[:id])

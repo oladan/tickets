@@ -38,7 +38,7 @@ class TicketsController < ApplicationController
 
   private
     def set_ticket
-      @ticket = Ticket.find_by uniq_reference: params[:id]
+      @ticket = Ticket.find(params[:id])
     end
 
     def ticket_params

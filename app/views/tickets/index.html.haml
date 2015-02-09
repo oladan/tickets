@@ -15,9 +15,6 @@
       = link_to raw('<i class="glyphicon glyphicon-plus"> Submit ticket</i>'), new_ticket_path, :class => 'btn btn-primary btn-lg'
       .content
 
-
-
-
 %table.table.table-striped
   %thead
     %tr
@@ -38,11 +35,13 @@
         %td= ticket.id
         %td= ticket.client_name
         %td= ticket.client_email
-        %td= link_to ticket.subject, 'tickets/' + ticket.uniq_reference
+        %td= link_to ticket.subject, ticket_path(ticket)
         %td= ticket.body.length > 150 ? ticket.body[0..150] + '...' : ticket.body
         %td= ticket.uniq_reference
-        %td= ticket.department.name
-        %td= ticket.state.name
+        -if ticket.department_id
+          %td= ticket.department.name
+        -if ticket.state_id
+          %td= ticket.state.name
         -if ticket.owner_id
           %td= ticket.owner.email
         -else

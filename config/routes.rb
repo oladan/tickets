@@ -5,11 +5,13 @@ Rails.application.routes.draw do
   resources :tickets, :only => [:show, :new, :create, :index] do
     resources :replies
   end
-
-  resources :states
-  resources :departments
+  
+  resources :states, :only => [:show, :new, :create, :index, :update, :edit]
+  resources :departments, :only => [:show, :new, :create, :index, :update, :edit]
 
   devise_for :owners
+
+  resources :owners, :only => [:show]
   
   root to: "tickets#index"
 end

@@ -8,7 +8,7 @@ class RepliesController < ApplicationController
     @ticket.update_attribute :owner_id, reply_params[:owner_id]
     UserMailer.ticket_replied_email(@ticket.state.name, @ticket.uniq_reference, 
                                     @reply.body, @ticket.client_email).deliver
-    redirect_to '/tickets/' + @ticket.uniq_reference
+    redirect_to ticket_path(@ticket)
   end
 
   private

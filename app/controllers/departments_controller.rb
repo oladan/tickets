@@ -31,11 +31,6 @@ class DepartmentsController < ApplicationController
     respond_with(@department)
   end
 
-  def destroy
-    @department.destroy
-    respond_with(@department)
-  end
-
   private
     def set_department
       @department = Department.find(params[:id])

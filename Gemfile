@@ -13,7 +13,6 @@ gem 'will_paginate'
 gem 'twitter-bootstrap-rails'
 gem 'will_paginate-bootstrap'
 gem 'devise'
-gem 'figaro'
 
 group :development, :test do
   gem 'sqlite3'
