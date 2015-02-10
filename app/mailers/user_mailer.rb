@@ -6,7 +6,8 @@ class UserMailer < ActionMailer::Base
     @ref = ref
     @url = "http://" + host
     @client_name = client_name
-    # mail(to: @email, subject: 'Ticket added ' + @ref)
+    # comment mailer for heroku
+    #mail(to: @email, subject: 'Ticket added ' + @ref)
   end
 
   def ticket_replied_email(email, ref, host, reply, state, client_name)
@@ -15,6 +16,7 @@ class UserMailer < ActionMailer::Base
     @url = "http://" + host
     @state = state
     @reply = reply
+    # comment mailer for heroku
     # mail(to: @email, subject: 'Ticket replied ' + @ref)
   end
 end

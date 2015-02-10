@@ -15,6 +15,3 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
-$("tr[data-link]").click(function() {
-  window.location = this.data("link")
-})

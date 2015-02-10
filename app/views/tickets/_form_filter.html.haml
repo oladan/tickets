@@ -1,18 +1,15 @@
 %center
-  | 
   %b Department:
   - @departments.each do |d|
-    = link_to d.name, :filter_department_id => d.id
-    |
+    = link_to d.name, {:filter_department_id => d.id}, :class => 'btn btn-default btn-xs'
   %br
-  | 
+  %br
   %b Status:
   - @states.each do |s|
-    = link_to s.name, :filter_state_id => s.id
-    |
+    = link_to s.name, {:filter_state_id => s.id}, :class => 'btn btn-default btn-xs'
   %br
   %br
-  = form_tag request.original_url, :method => 'get' do
+  = form_tag request.original_url, :method => 'get', :class => 'form-inline' do
     %p
-      = text_field_tag :search, params[:search], :placeholder => 'Ref id, subject, body...'
-      = submit_tag "Search", :name => nil
+      = text_field :search, params[:search], :placeholder => 'Ref id, subject, body...', :class => 'form-control'
+      = submit_tag "Search", :name => nil, :class => 'btn btn-default'

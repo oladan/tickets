@@ -15,24 +15,22 @@
       = link_to raw('<i class="glyphicon glyphicon-plus"> Submit ticket</i>'), new_ticket_path, :class => 'btn btn-primary btn-lg'
       .content
 
-%table.table.table-striped
+%table.table.table-striped.pretty
   %thead
     %tr
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:client)
-      %th= model_class.human_attribute_name(:client_email)
-      %th= model_class.human_attribute_name(:subject)
+      %th= sortable "client_name"
+      %th= sortable "client_email"
+      %th= sortable "subject"
       %th= model_class.human_attribute_name(:body)
       %th= model_class.human_attribute_name(:reference)
-      %th= model_class.human_attribute_name(:department_id)
+      %th= model_class.human_attribute_name(:department)
       %th= model_class.human_attribute_name(:state_id)
-      %th= model_class.human_attribute_name(:owner_id)
-      %th= model_class.human_attribute_name(:created)
+      %th= sortable "owner_id"
+      %th= sortable "created_at"
       %th= model_class.human_attribute_name(:replies)
   %tbody
     - @tickets.each do |ticket|
       %tr
-        %td= ticket.id
         %td= ticket.client_name
         %td= ticket.client_email
         %td= link_to ticket.subject, ticket_path(ticket)

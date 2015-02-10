@@ -47,3 +47,16 @@
       url('/assets/glyphicons-halflings-regular.ttf') format('truetype'),
       url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
+
+.pretty th .current {
+  padding-right: 19px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.pretty th .asc { 
+  background-image: url(/up_arrow.gif); 
+}
+
+.pretty th .desc { 
+  background-image: url(/down_arrow.gif); 
+}

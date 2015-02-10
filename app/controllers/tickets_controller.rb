@@ -1,6 +1,7 @@
 class TicketsController < ApplicationController
   before_action :set_ticket, only: [:show]
   respond_to :html
+  helper_method :sort_column, :sort_direction
 
   def index
     @departments = Department.all
@@ -9,7 +10,7 @@ class TicketsController < ApplicationController
     @tickets = @tickets.filter_department(filter_params[:filter_department_id]) if filter_params[:filter_department_id].present?
     @tickets = @tickets.filter_state(filter_params[:filter_state_id]) if filter_params[:filter_state_id].present?
     @tickets = @tickets.filter_subject(filter_params[:search]) if filter_params[:search].present?
-    @tickets = @tickets.order(:id => :desc).paginate(:page => params[:page], :per_page => 5)
+    @tickets = @tickets.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 5)
     respond_with(@tickets)
   end
 
@@ -49,7 +50,15 @@ class TicketsController < ApplicationController
     end
 
     def filter_params
-      params.permit(:ticket, :filter_department_id, :filter_state_id, :filter_owner_id, :search)
+      params.permit(:ticket, :filter_department_id, :filter_state_id, :filter_owner_id, :search, :order)
+    end
+
+    def sort_column
+      Ticket.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
     end
 
 end
