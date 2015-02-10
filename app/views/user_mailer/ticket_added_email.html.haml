@@ -3,8 +3,12 @@
   %head
   %body
     %h1
-      Ticked added, thank you!
+      Ticked added, thank you, #{@client_name}!
     %b
-      We report you about reply by email
+      We report you about reply by email.
     %p
-      You can view your ticket by ref: #{@ref}
+      You can view your ticket by ref: 
+      #{@ref}
+    %p
+      Link to your ticket: 
+      = link_to @url, @url 

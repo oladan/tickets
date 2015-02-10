@@ -5,8 +5,12 @@
     %h1
       You got reply:
     %p
-      #{@reply_text}
-    %b
-      State changed to: #{@status}
+      #{@reply}
+    %p
+      State changed to: #{@state}
     %p 
-      You can view your ticket by ref: #{@ref}
+      You can view your ticket by ref: 
+      #{@ref}
+    %p
+      Link to your ticket: 
+      = link_to @url, @url 

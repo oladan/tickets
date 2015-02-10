@@ -13,9 +13,10 @@ gem 'will_paginate'
 gem 'twitter-bootstrap-rails'
 gem 'will_paginate-bootstrap'
 gem 'devise'
+gem 'friendly_id', '~> 5.1.0'
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'mysql2'
   gem 'rspec-rails', '~> 3.0'
   gem 'capybara'
   gem 'spring'

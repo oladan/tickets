@@ -6,7 +6,6 @@ class TicketsController < ApplicationController
     @departments = Department.all
     @states = State.all
     @tickets = Ticket.where(nil)
-    @uniq_ref = uniq_reference
     @tickets = @tickets.filter_department(filter_params[:filter_department_id]) if filter_params[:filter_department_id].present?
     @tickets = @tickets.filter_state(filter_params[:filter_state_id]) if filter_params[:filter_state_id].present?
     @tickets = @tickets.filter_subject(filter_params[:search]) if filter_params[:search].present?
@@ -15,7 +14,6 @@ class TicketsController < ApplicationController
   end
 
   def new
-    @uniq_ref = uniq_reference
     @ticket = Ticket.new
     respond_with(@ticket)
   end
@@ -25,9 +23,15 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
-    @ticket.save
-    respond_with(@ticket)
-    UserMailer.ticket_added_email(ticket_params).deliver
+    if @ticket.save
+      flash[:notice] = "Ticket created!"
+      respond_with(@ticket)
+      UserMailer.ticket_added_email(@ticket.client_email, @ticket.uniq_reference, 
+                                    request.host_with_port + ticket_path(@ticket), @ticket.client_name).deliver
+    else
+      flash[:alert] = "Please fill in correctly all the fields"
+      respond_with(@ticket)
+    end
   end
 
   def show
@@ -36,7 +40,7 @@ class TicketsController < ApplicationController
 
   private
     def set_ticket
-      @ticket = Ticket.find(params[:id])
+      @ticket = Ticket.find_by uniq_reference: params[:id]
     end
 
     def ticket_params
@@ -48,15 +52,4 @@ class TicketsController < ApplicationController
       params.permit(:ticket, :filter_department_id, :filter_state_id, :filter_owner_id, :search)
     end
 
-    def char_gen
-      ('A'..'Z').to_a.shuffle[0, 3].join
-    end
-
-    def hex_gen
-      SecureRandom.hex(1).upcase
-    end
-
-    def uniq_reference
-      char_gen + '-' + hex_gen + '-' + char_gen + '-' + hex_gen + '-' + char_gen
-    end
 end

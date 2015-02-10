@@ -11,13 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209031553) do
+ActiveRecord::Schema.define(version: 20150210071103) do
 
   create_table "departments", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "owners", force: true do |t|
     t.string   "email",                  default: "",    null: false
@@ -35,12 +48,12 @@ ActiveRecord::Schema.define(version: 20150209031553) do
     t.boolean  "approved",               default: false, null: false
   end
 
-  add_index "owners", ["approved"], name: "index_owners_on_approved"
-  add_index "owners", ["email"], name: "index_owners_on_email", unique: true
-  add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
+  add_index "owners", ["approved"], name: "index_owners_on_approved", using: :btree
+  add_index "owners", ["email"], name: "index_owners_on_email", unique: true, using: :btree
+  add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true, using: :btree
 
   create_table "replies", force: true do |t|
-    t.text     "body",                limit: 255
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ticket_id"
@@ -50,10 +63,10 @@ ActiveRecord::Schema.define(version: 20150209031553) do
     t.integer  "state_id"
   end
 
-  add_index "replies", ["department_id"], name: "index_replies_on_department_id"
-  add_index "replies", ["owner_id"], name: "index_replies_on_owner_id"
-  add_index "replies", ["state_id"], name: "index_replies_on_state_id"
-  add_index "replies", ["ticket_id"], name: "index_replies_on_ticket_id"
+  add_index "replies", ["department_id"], name: "index_replies_on_department_id", using: :btree
+  add_index "replies", ["owner_id"], name: "index_replies_on_owner_id", using: :btree
+  add_index "replies", ["state_id"], name: "index_replies_on_state_id", using: :btree
+  add_index "replies", ["ticket_id"], name: "index_replies_on_ticket_id", using: :btree
 
   create_table "states", force: true do |t|
     t.string   "name"
@@ -74,8 +87,8 @@ ActiveRecord::Schema.define(version: 20150209031553) do
     t.integer  "owner_id"
   end
 
-  add_index "tickets", ["department_id"], name: "index_tickets_on_department_id"
-  add_index "tickets", ["owner_id"], name: "index_tickets_on_owner_id"
-  add_index "tickets", ["state_id"], name: "index_tickets_on_state_id"
+  add_index "tickets", ["department_id"], name: "index_tickets_on_department_id", using: :btree
+  add_index "tickets", ["owner_id"], name: "index_tickets_on_owner_id", using: :btree
+  add_index "tickets", ["state_id"], name: "index_tickets_on_state_id", using: :btree
 
 end
